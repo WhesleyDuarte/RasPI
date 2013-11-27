@@ -2,6 +2,7 @@ package moraes.hendrigo.app;
 
 import java.util.Scanner;
 
+import moraes.hendrigo.controller.ButtonTemperatureController;
 import moraes.hendrigo.controller.TemperatureController;
 
 import com.pi4j.io.gpio.GpioController;
@@ -22,7 +23,10 @@ public class StartApp {
 			System.out.println("GPIOController initialized !");
 			
 			
-			new TemperatureController(gpio).init();
+			TemperatureController temperatureController = new TemperatureController(gpio);
+			temperatureController.init();
+			
+			new ButtonTemperatureController(gpio, temperatureController).init();
 			
 			
 			System.out.println("App started !");

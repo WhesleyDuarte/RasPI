@@ -33,32 +33,36 @@ public class TemperatureController extends GPIOBased {
 		mosipin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12);
 		misopin = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
 		clockpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_14);
+	
+		//isn´t needed anymore. Now is call by the ButtonTemperatureController
+//		new Thread( new RunReadTemp(this) ).start();
 		
-		new Thread( new RunReadTemp(this) ).start();
 	}
 	
-	class RunReadTemp implements Runnable{
-		
-		TemperatureController temperatureController;
-		
-		public RunReadTemp(TemperatureController temperatureController){
-			this.temperatureController = temperatureController;
-		}
-		
-		@Override
-		public void run() {
-			while(true){
-				try{
-					Thread.sleep(5000);  //every 5 seconds, read the temperature
-					temperatureController.readTemperature();
-				}catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+//	class RunReadTemp implements Runnable{
+//		
+//		TemperatureController temperatureController;
+//		
+//		public RunReadTemp(TemperatureController temperatureController){
+//			this.temperatureController = temperatureController;
+//		}
+//		
+//		@Override
+//		public void run() {
+//			while(true){
+//				try{
+//					Thread.sleep(5000);  //every 5 seconds, read the temperature
+//					temperatureController.readTemperature();
+//				}catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 	
-	private void readTemperature() throws Exception{
+	//now, need to be protected|public
+	//private void readTemperature() throws Exception{
+	protected void readTemperature() throws Exception{
 		System.out.println("Reading Temperature...");
 		int times = 6;
 		double sumtemp_C = 0;

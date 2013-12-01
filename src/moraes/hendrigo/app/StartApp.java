@@ -3,6 +3,8 @@ package moraes.hendrigo.app;
 import java.util.Scanner;
 
 import moraes.hendrigo.controller.ButtonTemperatureController;
+import moraes.hendrigo.controller.LEDController;
+import moraes.hendrigo.controller.MovementDetectorController;
 import moraes.hendrigo.controller.TemperatureController;
 
 import com.pi4j.io.gpio.GpioController;
@@ -27,6 +29,13 @@ public class StartApp {
 			temperatureController.init();
 			
 			new ButtonTemperatureController(gpio, temperatureController).init();
+			
+			LEDController ledController = new LEDController(gpio);
+			ledController.init();
+			
+			new MovementDetectorController(gpio, ledController).init();
+			
+			
 			
 			
 			System.out.println("App started !");

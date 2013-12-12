@@ -2,7 +2,9 @@ package moraes.hendrigo.app;
 
 import java.util.Scanner;
 
+import moraes.hendrigo.controller.ButtonDistanceController;
 import moraes.hendrigo.controller.ButtonTemperatureController;
+import moraes.hendrigo.controller.DistanceController;
 import moraes.hendrigo.controller.LEDController;
 import moraes.hendrigo.controller.MovementDetectorController;
 import moraes.hendrigo.controller.TemperatureController;
@@ -17,6 +19,7 @@ import com.pi4j.io.gpio.GpioFactory;
  */
 public class StartApp {
 	public static void main(String[] args) {
+		
 		System.out.println("Starting app...");
 		GpioController gpio = null;
 		try{
@@ -30,11 +33,17 @@ public class StartApp {
 			
 			new ButtonTemperatureController(gpio, temperatureController).init();
 			
+			
 			LEDController ledController = new LEDController(gpio);
 			ledController.init();
 			
 			new MovementDetectorController(gpio, ledController).init();
 			
+			
+			DistanceController distanceController = new DistanceController(gpio);
+			distanceController.init();
+			
+			new ButtonDistanceController(gpio, distanceController).init();
 			
 			
 			

@@ -15,10 +15,12 @@ public class ButtonDistanceController extends GPIOBased {
 	
 	private GpioPinDigitalInput button;
 	private DistanceController distanceController;
+	private RelayController relayController;
 	
-	public ButtonDistanceController(GpioController gpio, DistanceController distanceController){
+	public ButtonDistanceController(GpioController gpio, DistanceController distanceController, RelayController relayController){
 		this.gpio = gpio;
 		this.distanceController = distanceController;
+		this.relayController = relayController;
 	}
 
 	@Override
@@ -31,7 +33,12 @@ public class ButtonDistanceController extends GPIOBased {
 
 				try {
 					if ( event.getState().isHigh()){
-						distanceController.readDistancia();
+						int distanciaMedia = distanceController.readDistancia();
+						if ( distanciaMedia > 100 ){ //if distance > 1 meter
+							relayController.turnBlueLightSeconds();
+						}else{
+							relayController.turnYellowLightSeconds();
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
